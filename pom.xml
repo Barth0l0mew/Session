@@ -10,6 +10,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>Session_Jdbs</module>
+        <module>Session_Radis</module>
+        <module>Session_MongoDb</module>
+        <module>Session_PostgreSql</module>
+
     </modules>
 
     <properties>
