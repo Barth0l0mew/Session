@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div th:fragment="userlist(users)" class="container mt-5 col py-3">
+    <h3>List of Users</h3>
+    <table class="table table-striped w-auto">
+        <tr>
+            <th>Id</th><th>Username</th><th>Roles</th><th>Enabled</th><th>Actions</th>
+        </tr>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:utext="${user.id}"></td>
+            <td th:utext="${user.username}"></td>
+            <td>
+                <th:block th:each="role: ${user.roles}">
+                    <span th:if="${role.name == 'ADMIN'}" th:utext="${role.name}" class="badge bg-primary"></span>
+                    <span th:if="${role.name == 'USER'}" th:utext="${role.name}" class="badge bg-success"></span>
+                    <span th:if="${role.name == 'CREATOR'}" th:utext="${role.name}" class="badge bg-warning"></span>
+                    <span th:if="${role.name == 'EDITOR'}" th:utext="${role.name}" class="badge bg-info"></span>
+                    <span th:if="${role.name == 'GUEST'}" th:utext="${role.name}" class="badge bg-secondary"></span>
+                </th:block>
+            </td>
+            <td th:if="${user.enabled}" class="text-center"><i class="bi-check"></i></td>
+            <td th:unless="${user.enabled}" class="text-center"><i class="bi-x"></i></td>
+            <td>
+                <a th:href="@{/edit_user(id=${user.id})}"><i class="bi-pencil-fill"></i></a>
+                <a href="#" th:data-id="${user.id}" th:data-username="${user.username}" data-bs-toggle="modal" data-bs-target="#deleteModal" id="aDelete">
+                    <i class="bi-eraser-fill"></i></a>
+                <a th:href="@{/delete_user(id=${user.id})}" th:data-id="${user.id}" th:data-username="${user.username}"  id="newDelete" onclick="return confirm ('Delete')"> delete</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a th:href="@{/create_user}"><i class="bi-pencil-fill"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
